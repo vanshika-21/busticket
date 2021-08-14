@@ -16,10 +16,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Praveen
- */
 public class Preview extends javax.swing.JFrame {
 
     /**

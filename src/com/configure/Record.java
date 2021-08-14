@@ -22,7 +22,7 @@ public class Record {
         {
             Class.forName("com.mysql.jdbc.Driver");
             String path="jdbc:mysql://localhost:3306/bus";
-            con = DriverManager.getConnection(path,"root","bhopal");
+            con = DriverManager.getConnection(path,"root","mysql");
         }
         catch(Exception e)
         {
@@ -102,7 +102,7 @@ public class Record {
         try
         {
             Connection con = Record.takeConnection();
-            String query= "insert into passenger(name,nopassenger,destination,mobile,Id_category,Id_number,date,Amount,vendor_id,bus_id) values(?,?,?,?,?,?,?,?,?,?)";
+            String query= "insert into passengers(name,nopassenger,destination,mobile,Id_category,Id_number,date,Amount,vendor_id,bus_id) values(?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, p_name);
             ps.setString(2, spinner_value);
@@ -130,7 +130,7 @@ public class Record {
         try
         {
             Connection con = Record.takeConnection();
-            String query= "SELECT passenger.`*`,bus_details.bus_no FROM passenger,bus_details WHERE passenger.pnr_no=? AND  passenger.bus_id = bus_details.bus_id;";
+            String query= "SELECT passengers.`*`,bus_details.bus_no FROM passengers,bus_details WHERE passengers.pnr_no=? AND  passengers.bus_id = bus_details.bus_id;";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, pnr);
             ResultSet rs = ps.executeQuery();
@@ -161,7 +161,7 @@ public class Record {
         try
         {
             Connection con = Record.takeConnection();
-            String query= "update passenger set photo=? where pnr_no=?";
+            String query= "update passengers set photo=? where pnr_no=?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, path);
             ps.setInt(2, pnr_no);
@@ -181,14 +181,15 @@ public class Record {
         try
         {
             Connection con = Record.takeConnection();
-            String query= "select pnr_no from passenger order by pnr_no desc";
+            String query= "select pnr_no from passengers order by pnr_no desc";
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery(query);
-            if(rs.next())
+            while(rs.next())
             {
                 pnr = rs.getInt(1);
+                break;
             }
-            ps.executeUpdate();
+            //ps.executeUpdate();
             con.close();
         }
         catch(Exception e)

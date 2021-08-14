@@ -66,8 +66,8 @@ public class PassengerDetails extends javax.swing.JFrame {
         lvendorID = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lImage = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        opencamera = new javax.swing.JButton();
+        takepic = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -128,6 +128,11 @@ public class PassengerDetails extends javax.swing.JFrame {
 
         tfTotal.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         tfTotal.setEnabled(false);
+        tfTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfTotalActionPerformed(evt);
+            }
+        });
 
         lvendorID.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
@@ -151,17 +156,17 @@ public class PassengerDetails extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.setText("Open Camera");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        opencamera.setText("Open Camera");
+        opencamera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                opencameraActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Take Picture");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        takepic.setText("Take Picture");
+        takepic.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                takepicActionPerformed(evt);
             }
         });
 
@@ -208,9 +213,9 @@ public class PassengerDetails extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(opencamera)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2)
+                                .addComponent(takepic)
                                 .addGap(54, 54, 54))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,8 +266,8 @@ public class PassengerDetails extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(cbIDCat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(opencamera)
+                    .addComponent(takepic))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
@@ -297,7 +302,7 @@ public class PassengerDetails extends javax.swing.JFrame {
         String dest = cbDest.getItemAt(cbDest.getSelectedIndex());
         String bus_amount = Record.getBusAmount(dest);
         int bus_id = Record.getBusId(dest);
-        double total = Double.parseDouble(spinner_value) *  Double.parseDouble(bus_amount);
+        double total = Double.parseDouble(spinner_value)*Double.parseDouble(bus_amount);
         tfTotal.setText("Total Amount: "+total);
         
         String p_name = tfName.getText();
@@ -318,7 +323,7 @@ public class PassengerDetails extends javax.swing.JFrame {
        
     }//GEN-LAST:event_bGenRecActionPerformed
 JFrame window = new JFrame("Test webcam panel");
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void opencameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opencameraActionPerformed
         // TODO add your handling code here:
         Webcam webcam = Webcam.getDefault();
 		webcam.setViewSize(WebcamResolution.VGA.getSize());
@@ -335,13 +340,12 @@ JFrame window = new JFrame("Test webcam panel");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.pack();
 		window.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_opencameraActionPerformed
 int pnr =0;
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void takepicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_takepicActionPerformed
         // TODO add your handling code here:
         // get default webcam and open it
-		try
-                {
+		try{
                     Webcam webcam = Webcam.getDefault();
                     webcam.open();
                     // get image
@@ -349,7 +353,9 @@ int pnr =0;
                     Image img = image.getScaledInstance(lImage.getWidth(),lImage.getHeight(), Image.SCALE_SMOOTH);
                     // save image to PNG file
                     pnr = Record.getPnr();
-                    String path = "C:/Users/Praveen/Documents/NetBeansProjects/busticket/img/"+pnr+".png";
+                    //String path = "C:/Users/Praveen/Documents/NetBeansProjects/busticket/img/"+pnr+".png";
+                    String path = "E:\\PROJECTS FINAL\\busticket-master\\img"+pnr+".png";
+
                     ImageIO.write(image, "PNG", new File(path));
                     
                     ImageIcon img_ico = new ImageIcon(img);
@@ -361,15 +367,19 @@ int pnr =0;
                 }
                 catch(Exception e)
                 {
-                    
+                    JOptionPane.showMessageDialog(null,"Cannot Stored the Image");
                 }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_takepicActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         Preview p = new Preview(pnr);
         p.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tfTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfTotalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -410,8 +420,6 @@ int pnr =0;
     private javax.swing.JButton bGenRec;
     private javax.swing.JComboBox<String> cbDest;
     private javax.swing.JComboBox<String> cbIDCat;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -424,7 +432,9 @@ int pnr =0;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lImage;
     private javax.swing.JLabel lvendorID;
+    private javax.swing.JButton opencamera;
     private javax.swing.JSpinner sNoPass;
+    private javax.swing.JButton takepic;
     private javax.swing.JTextField tfIDNum;
     private javax.swing.JTextField tfMobile;
     private javax.swing.JTextField tfName;
